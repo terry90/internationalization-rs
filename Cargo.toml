@@ -1,0 +1,10 @@
+[package]
+name = "internationalization"
+version = "0.0.0"
+authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
+edition = "2018"
+description = "Easy to use I18n"
+keywords = ["i18n", "internationalization"]
+license = "MIT/Apache-2.0"
+
+[dependencies]
