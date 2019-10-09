@@ -1,4 +1,15 @@
 {
+  "hello": {
+    "en": "Hello $name!",
+    "fr": "Salut $name !"
+  },
+  "multiple.vars": {
+    "fr": "Nom: $name, Truc: $thing, bingo: $bingo"
+  },
+  "inconsistent.vars": {
+    "en": "Name: $thing, ok: $ok",
+    "fr": "Salut $name !"
+  },
   "key.test": {
     "en": "This is a test",
     "fr": "C'est un test"
@@ -6,5 +17,8 @@
   "err.not_allowed": {
     "en": "You are not allowed to do this",
     "fr": "Vous n'êtes pas autorisé à faire cela"
+  },
+  "err.user.not_found": {
+    "en": "User not found: $email, ID: $id"
   }
 }

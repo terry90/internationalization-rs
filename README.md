@@ -19,6 +19,10 @@ the files must look like this:
 
 ```json
 {
+  "err.user.not_found": {
+    "fr": "Utilisateur introuvable: $email, $id",
+    "en": "User not found: $email, $id"
+  },
   "err.answer.all": {
     "fr": "Échec lors de la récupération des réponses",
     "en": "Failed to retrieve answers"
@@ -40,6 +44,18 @@ fn main() {
     let res = t!("err.not_allowed", lang);
 
     assert_eq!("You are not allowed to do this", res);
+}
+```
+
+You can use interpolation, any number of argument is OK but you should note that they have to be sorted alphabetically.
+To use variables, call the `t!` macro like this:
+
+```rust
+fn main() {
+    let lang = "en";
+    let res = t!("err.user.not_found", email: "me@localhost", id: "1", lang);
+
+    assert_eq!("User not found: me@localhost, ID: 1", res);
 }
 ```
 

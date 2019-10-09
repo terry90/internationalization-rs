@@ -19,6 +19,10 @@
 
 //! ```json
 //! {
+//!   "err.user.not_found": {
+//!     "fr": "Utilisateur introuvable: $email, $id",
+//!     "en": "User not found: $email, $id"
+//!  },
 //!   "err.answer.all": {
 //!     "fr": "Échec lors de la récupération des réponses",
 //!     "en": "Failed to retrieve answers"
@@ -56,8 +60,20 @@
 
 //!     // Code will not compile
 //! }
+//!
 //! ```
-
+//! You can use interpolation, any number of argument is OK but you should note that they have to be sorted alphabetically.
+//! To use variables, call the `t!` macro like this:
+//!
+//! ```rust
+//! fn main() {
+//!     let lang = "en";
+//!     let res = t!("err.user.not_found", email: "me@localhost", id: "1", lang);
+//!
+//!     assert_eq!("User not found: me@localhost, ID: 1", res);
+//! }
+//! ```
+//!
 //! ## Installation
 
 //! Internationalization is available on [crates.io](https://crates.io/crates/internationalization), include it in your `Cargo.toml`:
@@ -103,6 +119,33 @@ mod tests {
             "You are not allowed to do this"
         );
     }
+
+    #[test]
+    fn it_interpolates() {
+        assert_eq!(t!("hello", name: "Fred", "fr"), "Salut Fred !");
+        assert_eq!(t!("hello", name: "Fred", "en"), "Hello Fred!");
+    }
+
+    #[test]
+    fn it_interpolates_multiple_vars() {
+        assert_eq!(
+            t!("multiple.vars", bingo: "bingo", name: "Fred", thing: "thing", "fr"),
+            "Nom: Fred, Truc: thing, bingo: bingo"
+        );
+    }
+
+    #[test]
+    fn it_interpolates_inconsistent_vars() {
+        assert_eq!(
+            t!("inconsistent.vars", name: "Fred", ok: "top", thing: "thing", "fr"),
+            "Salut Fred !"
+        );
+        assert_eq!(
+            t!("inconsistent.vars", name: "Fred", ok: "top", thing: "thing", "en"),
+            "Name: thing, ok: top"
+        );
+    }
+
     #[test]
     #[should_panic]
     fn it_fails_to_translate() {

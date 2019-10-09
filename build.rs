@@ -1,6 +1,8 @@
 use glob::glob;
-use proc_macro2::TokenStream;
+use lazy_static::lazy_static;
+use proc_macro2::{Ident, Span, TokenStream};
 use quote::quote;
+use regex::Regex;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::prelude::*;
@@ -33,26 +35,79 @@ fn read_locales() -> Translations {
     translations
 }
 
+fn extract_vars(tr: &str) -> Vec<String> {
+    lazy_static! {
+        static ref RE: Regex = Regex::new("\\$[a-zA-Z0-9_-]+").unwrap();
+    }
+
+    let mut a = RE
+        .find_iter(tr)
+        .map(|mat| mat.as_str().to_owned())
+        .collect::<Vec<String>>();
+    a.sort();
+
+    println!("-----\n{:?}\n-----", &a);
+    a
+}
+
+fn convert_vars_to_idents(vars: &Vec<String>) -> Vec<Ident> {
+    vars.iter()
+        .map(|var| Ident::new(&var[1..], Span::call_site()))
+        .collect()
+}
+
 fn generate_code(translations: Translations) -> proc_macro2::TokenStream {
     let mut branches = Vec::<TokenStream>::new();
 
     for (key, trs) in translations {
         let mut langs = Vec::<TokenStream>::new();
+        let mut needs_interpolation = false;
+        let mut vars = Vec::new();
         for (lang, tr) in trs {
-            let l = quote! {
-                #lang => #tr,
-            };
-            langs.push(l)
+            let lang_vars = extract_vars(&tr);
+            needs_interpolation = lang_vars.len() > 0;
+
+            if needs_interpolation {
+                let idents = convert_vars_to_idents(&lang_vars);
+                vars.extend(lang_vars.clone());
+
+                langs.push(quote! {
+                    #lang => #tr#(.replace(#lang_vars, $#idents))*,
+                });
+            } else {
+                langs.push(quote! {
+                    #lang => #tr.to_owned(),
+                });
+            }
         }
-        let branch = quote! {
-            (#key, $lang:expr) => {
-                match $lang.as_ref() {
-                    #(#langs)*
-                    e => panic!("Missing language: {}", e)
-                }
-            };
-        };
-        branches.push(branch);
+
+        vars.sort();
+        vars.dedup();
+        let vars_ident = convert_vars_to_idents(&vars);
+        if needs_interpolation {
+            branches.push(quote! {
+                (#key, #(#vars_ident: $#vars_ident:expr, )*$lang:expr) => {
+                    match $lang.as_ref() {
+                        #(#langs)*
+                        e => panic!("Missing language: {}", e)
+                    }
+                };
+            });
+            branches.push(quote! {
+                (#key, $($e:tt)*) => {
+                    compile_error!(stringify!(Please provide: #(#vars_ident),* >> The order matters!));
+                };
+            });
+        } else {
+            branches.push(quote! {
+                (#key, $lang:expr) => {
+                    match $lang.as_ref() {
+                        #(#langs)*
+                        e => panic!("Missing language: {}", e)
+                    }
+                };
+            });
+        }
     }
 
     quote! {
