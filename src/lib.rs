@@ -44,6 +44,19 @@
 //!     assert_eq!("You are not allowed to do this", res);
 //! }
 //! ```
+//!
+//! If the key is missing, your code will not compile
+
+//! ```rust,compile_fail
+//! use internationalization::t;
+//!
+//! fn main() {
+//!     let lang = "en";
+//!     let res = t!("missing key", lang);
+
+//!     // Code will not compile
+//! }
+//! ```
 
 //! ## Installation
 
@@ -80,6 +93,15 @@ mod tests {
     #[test]
     fn it_translates() {
         assert_eq!(t!("key.test", "en"), "This is a test");
+        assert_eq!(t!("key.test", "fr"), "C'est un test");
+        assert_eq!(
+            t!("err.not_allowed", "fr"),
+            "Vous n'êtes pas autorisé à faire cela"
+        );
+        assert_eq!(
+            t!("err.not_allowed", "en"),
+            "You are not allowed to do this"
+        );
     }
     #[test]
     #[should_panic]

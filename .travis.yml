@@ -1,4 +1,6 @@
 language: rust
+sudo: required
+cache: cargo
 rust:
   - stable
   - beta
@@ -16,4 +18,20 @@ matrix:
   allow_failures:
     - rust: nightly
   fast_finish: true
-cache: cargo
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - binutils-dev
+      - cmake
+    sources:
+      - kalakris-cmake
+
+cache:
+  directories:
+    - /home/travis/.cargo
+
+before_cache:
+  - rm -rf /home/travis/.cargo/registry
