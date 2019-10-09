@@ -8,8 +8,10 @@ keywords = ["i18n", "internationalization"]
 license = "MIT/Apache-2.0"
 repository = "https://github.com/terry90/internationalization-rs"
 homepage = "https://github.com/terry90/internationalization-rs"
+build = "build.rs"
 
-[dependencies]
-lazy_static = "1.4.0"
+[build-dependencies]
 glob = "0.3.0"
-serde_json = "1.0.40"
+quote = "1.0.2"
+serde_json = "1.0.41"
+proc-macro2 = "1.0"
