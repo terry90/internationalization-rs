@@ -36,9 +36,11 @@ the files must look like this:
 
 Any number of languages can be added, but you should provide them for everything since it will panic if a language is not found when queried for a key.
 
-In your app, jsut call the `t!` macro
+In your app, just call the `t!` macro
 
 ```rust
+use internationalization::t;
+
 fn main() {
     let lang = "en";
     let res = t!("err.not_allowed", lang);
@@ -51,6 +53,8 @@ You can use interpolation, any number of argument is OK but you should note that
 To use variables, call the `t!` macro like this:
 
 ```rust
+use internationalization::t;
+
 fn main() {
     let lang = "en";
     let res = t!("err.user.not_found", email: "me@localhost", id: "1", lang);

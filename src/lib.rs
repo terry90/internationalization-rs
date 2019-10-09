@@ -66,6 +66,8 @@
 //! To use variables, call the `t!` macro like this:
 //!
 //! ```rust
+//! use internationalization::t;
+//!
 //! fn main() {
 //!     let lang = "en";
 //!     let res = t!("err.user.not_found", email: "me@localhost", id: "1", lang);
