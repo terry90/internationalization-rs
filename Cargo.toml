@@ -1,6 +1,6 @@
 [package]
 name = "internationalization"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
 edition = "2018"
 description = "Easy to use I18n"
