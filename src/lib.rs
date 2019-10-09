@@ -80,7 +80,7 @@
 
 //! ```toml
 //! [dependencies]
-//! internationalization = "0.0.2"
+//! internationalization = "0.0.3"
 //! ```
 
 //! Then include it in your code like this:
