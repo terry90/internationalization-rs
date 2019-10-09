@@ -2,5 +2,9 @@
   "key.test": {
     "en": "This is a test",
     "fr": "C'est un test"
+  },
+  "err.not_allowed": {
+    "en": "You are not allowed to do this",
+    "fr": "Vous n'êtes pas autorisé à faire cela"
   }
 }
