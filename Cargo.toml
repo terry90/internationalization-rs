@@ -1,10 +1,10 @@
 [package]
-name = "internationalization"
+name = "locales"
 version = "0.0.3"
 authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
 edition = "2018"
 description = "Easy to use I18n"
-keywords = ["i18n", "internationalization", "locales"]
+keywords = ["i18n", "internationalization", "locales", "localization"]
 license = "MIT/Apache-2.0"
 repository = "https://github.com/terry90/internationalization-rs"
 homepage = "https://github.com/terry90/internationalization-rs"

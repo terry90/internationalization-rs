@@ -1,14 +1,14 @@
-//! # Internationalization
+//! # Locales
 
-//! [![Crates.io Version](https://img.shields.io/crates/v/internationalization.svg)](https://crates.io/crates/internationalization)
-//! ![LICENSE](https://img.shields.io/crates/l/internationalization)
+//! [![Crates.io Version](https://img.shields.io/crates/v/locales.svg)](https://crates.io/crates/locales)
+//! ![LICENSE](https://img.shields.io/crates/l/locales)
 //! [![Coverage Status](https://coveralls.io/repos/github/terry90/internationalization-rs/badge.svg?branch=master)](https://coveralls.io/github/terry90/internationalization-rs?branch=master)
 //! [![Build Status](https://travis-ci.org/terry90/internationalization-rs.svg?branch=master)](https://travis-ci.org/terry90/internationalization-rs)
 //!
 //! An simple compile time i18n implementation in Rust.
 //! It throws a compilation error if the translation key is not present, but since the `lang` argument is dynamic it will panic if the language has not been added for the matching key.
 
-//! > API documentation [https://crates.io/crates/internationalization](https://crates.io/crates/internationalization)
+//! > API documentation [https://crates.io/crates/locales](https://crates.io/crates/locales)
 
 //! ## Usage
 
@@ -39,7 +39,7 @@
 //! In your app, just call the `t!` macro
 
 //! ```rust
-//! use internationalization::t;
+//! use locales::t;
 //!
 //! fn main() {
 //!     let lang = "en";
@@ -52,7 +52,7 @@
 //! If the key is missing, your code will not compile
 
 //! ```rust,compile_fail
-//! use internationalization::t;
+//! use locales::t;
 //!
 //! fn main() {
 //!     let lang = "en";
@@ -66,7 +66,7 @@
 //! To use variables, call the `t!` macro like this:
 //!
 //! ```rust
-//! use internationalization::t;
+//! use locales::t;
 //!
 //! fn main() {
 //!     let lang = "en";
@@ -78,29 +78,29 @@
 //!
 //! ## Installation
 
-//! Internationalization is available on [crates.io](https://crates.io/crates/internationalization), include it in your `Cargo.toml`:
+//! Locales is available on [crates.io](https://crates.io/crates/locales), include it in your `Cargo.toml`:
 
 //! ```toml
 //! [dependencies]
-//! internationalization = "0.0.3"
+//! locales = "0.0.3"
 //! ```
 
 //! Then include it in your code like this:
 
 //! ```rust,ignore
 //! #[macro_use]
-//! extern crate internationalization;
+//! extern crate locales;
 //! ```
 
 //! Or use the macro where you want to use it:
 
 //! ```rust
-//! use internationalization::t;
+//! use locales::t;
 //! ```
 
 //! ## Note
 
-//! Internationalization will not work if no `PWD` env var is set at compile time.
+//! Locales will not work if no `PWD` env var is set at compile time.
 
 include!(concat!(env!("OUT_DIR"), "/i18n.rs"));
 
