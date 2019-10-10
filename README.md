@@ -69,7 +69,7 @@ Locales is available on [crates.io](https://crates.io/crates/locales), include i
 
 ```toml
 [dependencies]
-locales = "0.0.3"
+locales = "0.1.0"
 ```
 
 Then include it in your code like this:

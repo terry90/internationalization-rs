@@ -1,6 +1,6 @@
 [package]
 name = "locales"
-version = "0.0.3"
+version = "0.1.0"
 authors = ["Terry Raimondo <terry.raimondo@gmail.com>"]
 edition = "2018"
 description = "Easy to use I18n"
