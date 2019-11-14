@@ -1,11 +1,9 @@
-//! # Locales
-
 //! [![Crates.io Version](https://img.shields.io/crates/v/locales.svg)](https://crates.io/crates/locales)
 //! ![LICENSE](https://img.shields.io/crates/l/locales)
 //! [![Coverage Status](https://coveralls.io/repos/github/terry90/internationalization-rs/badge.svg?branch=master)](https://coveralls.io/github/terry90/internationalization-rs?branch=master)
 //! [![Build Status](https://travis-ci.org/terry90/internationalization-rs.svg?branch=master)](https://travis-ci.org/terry90/internationalization-rs)
 //!
-//! An simple compile time i18n implementation in Rust.
+//! A simple compile time i18n implementation in Rust.
 //! It throws a compilation error if the translation key is not present, but since the `lang` argument is dynamic it will panic if the language has not been added for the matching key.
 
 //! > API documentation [https://crates.io/crates/locales](https://crates.io/crates/locales)
@@ -101,6 +99,7 @@
 //! ## Note
 
 //! Locales will not work if no `PWD` env var is set at compile time.
+//! It should work out of the box though
 
 include!(concat!(env!("OUT_DIR"), "/i18n.rs"));
 
