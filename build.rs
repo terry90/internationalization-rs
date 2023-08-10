@@ -50,7 +50,7 @@ fn extract_vars(tr: &str) -> Vec<String> {
     a
 }
 
-fn convert_vars_to_idents(vars: &Vec<String>) -> Vec<Ident> {
+fn convert_vars_to_idents(vars: &[String]) -> Vec<Ident> {
     vars.iter()
         .map(|var| Ident::new(&var[1..], Span::call_site()))
         .collect()
@@ -65,7 +65,7 @@ fn generate_code(translations: Translations) -> proc_macro2::TokenStream {
         let mut vars = Vec::new();
         for (lang, tr) in trs {
             let lang_vars = extract_vars(&tr);
-            needs_interpolation = lang_vars.len() > 0;
+            needs_interpolation = !lang_vars.is_empty();
 
             if needs_interpolation {
                 let idents = convert_vars_to_idents(&lang_vars);
@@ -123,9 +123,9 @@ fn generate_code(translations: Translations) -> proc_macro2::TokenStream {
 
 fn write_code(code: TokenStream) {
     let dest = std::env::var("OUT_DIR").unwrap();
-    let mut output = File::create(&std::path::Path::new(&dest).join("i18n.rs")).unwrap();
+    let mut output = File::create(std::path::Path::new(&dest).join("i18n.rs")).unwrap();
     output
-        .write(code.to_string().as_bytes())
+        .write_all(code.to_string().as_bytes())
         .expect("Cannot write generated i18n code");
 }
 
